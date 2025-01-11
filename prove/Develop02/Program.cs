@@ -5,6 +5,7 @@ using System;
 
 public class Entry
 {
+    // Properties for journal entry
     public string Prompt { get; set; }
     public string Response { get; set; }
     public DateTime Date { get; set; }
@@ -21,8 +22,10 @@ public class Entry
 
 public class Journal
 {
+    // List of journal entries
     public List<Entry> Entries { get; set; } = new List<Entry>();
 
+    // Add a new entry to the journal
     public void AddEntry(string prompt, string response)
     {
         Entries.Add(new Entry(prompt, response));
@@ -30,6 +33,7 @@ public class Journal
 
     public void SaveToFile(string filename)
     {
+        // Serialize the list of entries to an XML file
         using (var writer = new StreamWriter(filename))
         {
             var serializer = new XmlSerializer(typeof(List<Entry>));
@@ -39,6 +43,7 @@ public class Journal
 
     public void LoadFromFile(string filename)
     {
+        // Deserialize the XML file to a list of entries
         using (var reader = new StreamReader(filename))
         {
             var serializer = new XmlSerializer(typeof(List<Entry>));
@@ -49,6 +54,7 @@ public class Journal
 
 public class Program
 {
+    // Create a journal and a list of prompts
     private static Journal journal = new Journal();
     private static List<string> prompts = new List<string>()
     {
@@ -62,6 +68,7 @@ public class Program
         "What did I learn today?"
     };
 
+    // Main method to display the menu and handle user input
     public static void Main(string[] args)
     {
         bool exit = false;
@@ -101,6 +108,7 @@ public class Program
         }
     }
 
+    // Helper methods to perform the menu actions
     private static void WriteNewEntry()
     {
         Random random = new Random();
@@ -112,6 +120,7 @@ public class Program
         Console.WriteLine("Entry added successfully!");
     }
 
+    // Display all journal entries
     private static void DisplayJournal()
     {
         Console.WriteLine("\nJournal Entries:");
@@ -130,6 +139,7 @@ public class Program
         }
     }
 
+    // Save the journal to a file
     private static void SaveJournalToFile()
     {
         Console.Write("\nEnter filename to save: ");
@@ -138,6 +148,7 @@ public class Program
         Console.WriteLine($"Journal saved to {filename}");
     }
 
+    // Load the journal from a file
     private static void LoadJournalFromFile()
     {
         Console.Write("\nEnter filename to load: ");
